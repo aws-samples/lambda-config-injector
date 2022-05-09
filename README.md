@@ -23,4 +23,4 @@ Checkout the simple python lambda example [here](examples/secret-injection-demo)
 
 ## Status
 
-This project to a demo. Do **NOT** use for production environment. It has a lot of room for improvement.
+This project is a demo. Do **NOT** use for production environment. It has a lot of room for improvement.
