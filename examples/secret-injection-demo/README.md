@@ -13,6 +13,16 @@ This is a hello world sample python application created with AWS SAM CLI to demo
   DB_PASSWORD: !Sub "{{inject:secretsmanager:${SecretArn}:SecretString:password}}"
 ```
 5. Add a layer with secrets injector and a wrapper script. Checkout the SAM [Template file](template.yaml) for example.
+6. In the lambda handler, these environment variables are updated with secret values. And you can use the directly in your code. 
+```python 
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "DB_USERNAME": os.getenv("DB_USERNAME"),
+            "DB_PASSWORD": os.getenv("DB_PASSWORD"),
+        }),
+    }
+```
 
 ## Build and Deploy 
 
