@@ -14,8 +14,8 @@ A simple tool to inject secrets from AWS Secrets Manager into Lambda functions a
    - ENV_VAR = "{{inject:secretsmanager:secret-id:SecretString:json-key}}"
    - *secret-id*: the ARN or name of the secret
    - *json-key*: The key name of the key-value pair whose value you want to retrieve
-2. add the injector and a wrapper script to the lambda function
-3. give the lambda function to read the secrets from Secrets Manager
+2. add the injector and a wrapper script to the lambda function as a layer
+3. give the lambda function permission to read the secrets from AWS Secrets Manager
 
 ## Example
 

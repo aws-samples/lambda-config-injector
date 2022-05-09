@@ -7,6 +7,12 @@ This is a hello world sample python application created with AWS SAM CLI to demo
 1. Install AWS CLI, SAM CLI and docker. 
 2. Create a secret in AWS Secret Manager. Add two key/value pairs, e.g. `{"username":"admin","password":"1qaz2wsx#EDC"}`
 3. Take note of the secret ARN
+4. Add two environment variables for these two secrets. Checkout the SAM [Template file](template.yaml) for example. 
+```bash 
+  DB_USERNAME: !Sub "{{inject:secretsmanager:${SecretArn}:SecretString:username}}"
+  DB_PASSWORD: !Sub "{{inject:secretsmanager:${SecretArn}:SecretString:password}}"
+```
+5. Add a layer with secrets injector and a wrapper script. Checkout the SAM [Template file](template.yaml) for example.
 
 ## Build and Deploy 
 
@@ -18,7 +24,7 @@ Provide the secret ARN when SAM CLI asks for Parameter SecretArn.
 
 ## Test
 
-When the deployment complete, curl the HelloWorldApi's url in the output. You should see the secrets' values. 
+When the deployment completes, curl the HelloWorldApi's url in the output. You should see the secrets' values. 
 
 ```bash
 % curl https://xxxxxxxx.execute-api.ap-northeast-1.amazonaws.com/Prod/   
