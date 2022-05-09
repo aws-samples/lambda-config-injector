@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  secret-injection-demo
+
+  Sample SAM Template for secret-injection-demo
+
+Parameters:
+  SecretArn:
+    Type: String
+    Description: the ARN of the secret stored in AWS Secrets Manager
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: hello_world/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      MemorySize: 128
+      Architectures:
+        - x86_64
+      Layers:
+        - !Ref SecretsInjectorLayer
+      Policies:
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Ref SecretArn
+      Environment:
+        Variables:
+          AWS_LAMBDA_EXEC_WRAPPER: /opt/bin/bootstrap
+          DB_USERNAME: !Sub "{{inject:secretsmanager:${SecretArn}:SecretString:username}}"
+          DB_PASSWORD: !Sub "{{inject:secretsmanager:${SecretArn}:SecretString:password}}"
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /
+            Method: get
+
+  SecretsInjectorLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: layer/
+    Metadata:
+      BuildMethod: makefile
+      BuildArchitecture: x86_64
+
+Outputs:
+  HelloWorldApi:
+    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+  HelloWorldFunction:
+    Description: "Hello World Lambda Function ARN"
+    Value: !GetAtt HelloWorldFunction.Arn
