@@ -6,7 +6,7 @@ A simple tool to inject secrets from AWS Secrets Manager into Lambda functions a
 
 - retrieve secrets from AWS Secrets Manager
 - save the secrets to a file in /tmp directory
-- expose the secrets as environment variables using a wrapper script and delete the file under /tmp
+- expose the secrets as environment variables using a wrapper script and delete the tmp file
 
 ## Usage
 
