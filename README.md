@@ -24,3 +24,11 @@ Checkout the simple python lambda example [here](examples/secret-injection-demo)
 ## Status
 
 This project is a demo. Do **NOT** use for production environment. It has a lot of room for improvement.
+
+## Security
+
+See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+
+## License
+
+This library is licensed under the MIT-0 License. See the LICENSE file.
