@@ -1,4 +1,4 @@
-# AWS Lambda Secrets Injector
+# AWS Lambda Config Injector
 
 A simple tool to inject secrets from AWS Secrets Manager into Lambda functions as environment variables
 
